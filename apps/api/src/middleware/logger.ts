@@ -28,6 +28,8 @@ function createLogger() {
     });
 }
 
+const loggerParent = createLogger();
+
 export const pinoLoggerMiddleware = every(
     requestIdMiddleware(),
     async (c, next) => {
@@ -35,7 +37,7 @@ export const pinoLoggerMiddleware = every(
         const method = c.req.method;
         const url = c.req.path;
 
-        const logger = createLogger().child({
+        const logger = loggerParent.child({
             requestId,
             request: {
                 method,
